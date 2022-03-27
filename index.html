@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+    />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Multilink</title>
+  </head>
+  <body>
+    <a
+      href="javascript:(function()%7Bvar%20tracking%20%3D%20false%3B%0Avar%20el%20%3D%20document.createElement(%22div%22)%3B%0Ael.style.boxSizing%20%3D%20%22content-box%22%3B%0Ael.style.backgroundColor%20%3D%20%22rgba(0%2C0%2C0%2C0)%22%3B%0Ael.style.borderWidth%20%3D%20%223px%22%3B%0Ael.style.borderStyle%20%3D%20%22solid%22%3B%0Ael.style.borderColor%20%3D%20%22black%22%3B%0Ael.style.position%20%3D%20%22absolute%22%3B%0Ael.style.zIndex%20%3D%20%229999%22%3B%0Avar%20p1%20%3D%20%5B0%2C%200%5D%3B%0Avar%20p2%20%3D%20%5B0%2C%200%5D%3B%0Afunction%20sizeEl()%20%7B%0A%20%20%20%20var%20x1%20%3D%20p1%5B0%5D%2C%20y1%20%3D%20p1%5B1%5D%3B%0A%20%20%20%20var%20x2%20%3D%20p2%5B0%5D%2C%20y2%20%3D%20p2%5B1%5D%3B%0A%20%20%20%20var%20top%20%3D%20Math.min(y1%2C%20y2)%3B%0A%20%20%20%20var%20right%20%3D%20Math.max(x1%2C%20x2)%3B%0A%20%20%20%20var%20bottom%20%3D%20Math.max(y1%2C%20y2)%3B%0A%20%20%20%20var%20left%20%3D%20Math.min(x1%2C%20x2)%3B%0A%20%20%20%20el.style.top%20%3D%20%22%22.concat(top%2C%20%22px%22)%3B%0A%20%20%20%20el.style.left%20%3D%20%22%22.concat(left%2C%20%22px%22)%3B%0A%20%20%20%20el.style.width%20%3D%20%22%22.concat(right%20-%20left%2C%20%22px%22)%3B%0A%20%20%20%20el.style.height%20%3D%20%22%22.concat(bottom%20-%20top%2C%20%22px%22)%3B%0A%7D%0Afunction%20onDown(e)%20%7B%0A%20%20%20%20tracking%20%3D%20true%3B%0A%20%20%20%20p1%20%3D%20%5Be.pageX%2C%20e.pageY%5D%3B%0A%20%20%20%20p2%20%3D%20%5Be.pageX%2C%20e.pageY%5D%3B%0A%20%20%20%20sizeEl()%3B%0A%20%20%20%20document.body.appendChild(el)%3B%0A%7D%0Afunction%20onUp()%20%7B%0A%20%20%20%20tracking%20%3D%20false%3B%0A%20%20%20%20var%20_a%20%3D%20el.getBoundingClientRect()%2C%20t1%20%3D%20_a.top%2C%20r1%20%3D%20_a.right%2C%20b1%20%3D%20_a.bottom%2C%20l1%20%3D%20_a.left%3B%0A%20%20%20%20var%20selected%20%3D%20%5B%5D%3B%0A%20%20%20%20document.querySelectorAll(%22a%22).forEach(function%20(a)%20%7B%0A%20%20%20%20%20%20%20%20var%20_a%20%3D%20a.getBoundingClientRect()%2C%20t2%20%3D%20_a.top%2C%20r2%20%3D%20_a.right%2C%20b2%20%3D%20_a.bottom%2C%20l2%20%3D%20_a.left%3B%0A%20%20%20%20%20%20%20%20if%20(t2%20%3C%20b1%20%26%26%20l2%20%3C%20r1%20%26%26%20b2%20%3E%20t1%20%26%26%20r2%20%3E%20l1)%0A%20%20%20%20%20%20%20%20%20%20%20%20selected.push(a.getAttribute(%22href%22))%3B%0A%20%20%20%20%7D)%3B%0A%20%20%20%20document.body.removeChild(el)%3B%0A%20%20%20%20if%20(selected.length%20%3D%3D%3D%200)%20%7B%0A%20%20%20%20%20%20%20%20console.error(%22no-selection%22)%3B%0A%20%20%20%20%7D%0A%20%20%20%20else%20if%20(confirm(%22Open%20%22%20%2B%20selected.length%20%2B%20%22%20links%3F%22))%20%7B%0A%20%20%20%20%20%20%20%20selected.map(function%20(url)%20%7B%20return%20window.open(url%2C%20%22_blank%22)%3B%20%7D)%3B%0A%20%20%20%20%20%20%20%20console.log(selected)%3B%0A%20%20%20%20%7D%0A%20%20%20%20else%20%7B%0A%20%20%20%20%20%20%20%20console.error(%22canceled%22)%3B%0A%20%20%20%20%7D%0A%20%20%20%20window.removeEventListener(%22mousedown%22%2C%20onDown)%3B%0A%20%20%20%20window.removeEventListener(%22mouseup%22%2C%20onUp)%3B%0A%20%20%20%20window.removeEventListener(%22mousemove%22%2C%20onMove)%3B%0A%7D%0Afunction%20onMove(e)%20%7B%0A%20%20%20%20if%20(!tracking)%0A%20%20%20%20%20%20%20%20return%3B%0A%20%20%20%20p2%20%3D%20%5Be.pageX%2C%20e.pageY%5D%3B%0A%20%20%20%20sizeEl()%3B%0A%7D%0Awindow.addEventListener(%22mousedown%22%2C%20onDown)%3B%0Awindow.addEventListener(%22mouseup%22%2C%20onUp)%3B%0Awindow.addEventListener(%22mousemove%22%2C%20onMove)%3B%7D)()%3B"
+    >
+      Multilink
+    </a>
+    <script>
+      for (let i = 0; i < 100; i++) {
+        const wrapper = document.createElement("div");
+        const link = document.createElement("a");
+        link.innerText = `Link ${i + 1}`;
+        link.setAttribute("href", `#${i}`);
+
+        wrapper.appendChild(link);
+        document.body.appendChild(wrapper);
+      }
+    </script>
+  </body>
+</html>
